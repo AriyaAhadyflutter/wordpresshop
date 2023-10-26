@@ -3,6 +3,7 @@ import 'package:wordpreesapp/api/api_service.dart';
 import 'package:wordpreesapp/contants/constants.dart';
 import 'package:wordpreesapp/model/woocammers/register.dart';
 import 'package:wordpreesapp/ui/singup/customFilde.dart';
+import 'package:wordpreesapp/ui/utils/custom_dilog_box.dart';
 import 'package:wordpreesapp/ui/utils/exstanions.dart';
 
 class SingUp extends StatefulWidget {
@@ -140,8 +141,8 @@ class _SingUpState extends State<SingUp> {
                           validator: (value) {
                             if (value.toString().isEmpty) {
                               return 'باید فیلد رو پر کنی';
-                            } 
-                            if (!value!.toString().isValidPassWord){
+                            }
+                            if (!value!.toString().isValidPassWord) {
                               return 'پسورد قوی نیست';
                             }
                             return null;
@@ -178,88 +179,23 @@ class _SingUpState extends State<SingUp> {
                                         apiCalled = false;
                                       });
                                       if (retRes) {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              title: const Text(
-                                                textAlign: TextAlign.center,
-                                                'برنامه ووکامرس',
-                                                style: TextStyle(
-                                                  fontSize: 23,
-                                                  fontFamily: 'iranSans',
-                                                ),
-                                              ),
-                                              content: Text(
-                                                textAlign: TextAlign.center,
-                                                'ثبت نام موفقیت آمیز بود',
-                                                style: TextStyle(
-                                                  fontSize: 19,
-                                                  color: MyConstantsSC
-                                                      .primarycolor,
-                                                  fontFamily: 'yagut',
-                                                ),
-                                              ),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text(
-                                                    'باشه',
-                                                    style: TextStyle(
-                                                      color: MyConstantsSC
-                                                          .primarycolor,
-                                                      fontFamily: 'Lalezar',
-                                                      fontSize: 16,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            );
+                                        CustomDialogBox.showMassage(
+                                          context,
+                                          'ثبت نام موفق',
+                                          "ثبت نام موقیت آمیز بود ",
+                                          "باشه ",
+                                          () {
+                                            Navigator.pop(context);
                                           },
                                         );
                                       } else {
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return AlertDialog(
-                                              title: const Text(
-                                                textAlign: TextAlign.center,
-                                                'برنامه ووکامرس',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  fontFamily: 'iranSans',
-                                                ),
-                                              ),
-                                              content: const Text(
-                                                textAlign: TextAlign.center,
-                                                '!! خطا',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.red,
-                                                  fontFamily: 'yagut',
-                                                ),
-                                              ),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text(
-                                                    'باشه',
-                                                    style: TextStyle(
-                                                      color: MyConstantsSC
-                                                          .primarycolor,
-                                                      fontFamily: 'Lalezar',
-                                                      fontSize: 16,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
+                                        CustomDialogBox.showMassage(
+                                            context,
+                                            "ثبت نام ناموفق",
+                                            "عملیات موفقیت آمیز نبود",
+                                            "باشه", () {
+                                          Navigator.pop(context);
+                                        });
                                       }
                                     },
                                   );
