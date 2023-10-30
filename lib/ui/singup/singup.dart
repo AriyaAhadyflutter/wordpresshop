@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:wordpreesapp/api/api_service.dart';
 import 'package:wordpreesapp/contants/constants.dart';
 import 'package:wordpreesapp/model/woocammers/register.dart';
+import 'package:wordpreesapp/ui/login/loginpage.dart';
 import 'package:wordpreesapp/ui/singup/customFilde.dart';
+import 'package:wordpreesapp/ui/utils/custom_appbar.dart';
 import 'package:wordpreesapp/ui/utils/custom_dilog_box.dart';
 import 'package:wordpreesapp/ui/utils/exstanions.dart';
 
@@ -31,40 +34,7 @@ class _SingUpState extends State<SingUp> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned(
-            top: 50,
-            left: 20,
-            right: 20,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: MyConstantsSC.primarycolor.withOpacity(0.15),
-                  ),
-                  child: Icon(
-                    Icons.close,
-                    color: MyConstantsSC.primarycolor,
-                  ),
-                ),
-                Container(
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: MyConstantsSC.primarycolor.withOpacity(0.15),
-                  ),
-                  child: Icon(
-                    Icons.share,
-                    color: MyConstantsSC.primarycolor,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          const CustomAppBar(appBarText: 'ثبت نام'),
           Positioned(
             top: 150,
             left: 20,
@@ -219,7 +189,15 @@ class _SingUpState extends State<SingUp> {
                                   vertical: 12,
                                 ),
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  PageTransition(
+                                    child: const Login(),
+                                    type: PageTransitionType.leftToRight,
+                                  ),
+                                );
+                              },
                               child: const Text(
                                 'اکانت داری؟',
                                 style: TextStyle(

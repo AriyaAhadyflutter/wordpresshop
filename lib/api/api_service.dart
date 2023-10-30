@@ -2,13 +2,15 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:wordpreesapp/contants/constants.dart';
+import 'package:wordpreesapp/model/woocammers/loginmodel.dart';
 import 'package:wordpreesapp/model/woocammers/register.dart';
 
 class ApiService {
   Future<bool> createCustomer(CustomerModel model) async {
     bool returnResponse = false;
     String authToken = base64.encode(
-      utf8.encode("${WoocommerceConstants.consumerKey}:${WoocommerceConstants.consumerSecret}"),
+      utf8.encode(
+          "${WoocommerceConstants.consumerKey}:${WoocommerceConstants.consumerSecret}"),
     );
 
     try {
@@ -25,7 +27,7 @@ class ApiService {
       if (response.statusCode == 201) {
         returnResponse = true;
       }
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       if (e.response!.statusCode == 404) {
         returnResponse = false;
       } else {
@@ -33,5 +35,33 @@ class ApiService {
       }
     }
     return returnResponse;
+  }
+
+  Future<LoginResponseModel> loginCustomer(
+    String username,
+    String password,
+  ) async {
+    late LoginResponseModel loginModel;
+
+    try {
+      var response = await Dio().post(
+        WoocommerceConstants.tokenURL,
+        data: {
+          'username': username,
+          'password': password,
+        },
+        options: Options(
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        loginModel = LoginResponseModel.fromJson(response.data);
+      }
+    } on DioException catch (e) {
+      throw 'error : $e';
+    }
+    return loginModel;
   }
 }

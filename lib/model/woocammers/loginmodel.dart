@@ -2,13 +2,13 @@ class LoginResponseModel {
   bool? success;
   int? statusCode;
   String? code;
-  String? massage;
+  String? message;
   Data? data;
   LoginResponseModel({
     this.success,
     this.statusCode,
     this.code,
-    this.massage,
+    this.message,
     this.data,
   });
 
@@ -16,7 +16,7 @@ class LoginResponseModel {
     success = json['success'];
     statusCode = json['statusCode'];
     code = json['code'];
-    massage = json['massage'];
+    message = json['message'];
     if (json['data'].toString().isNotEmpty) {
       data = Data.fromJson(json['data']);
     }
@@ -26,7 +26,7 @@ class LoginResponseModel {
     data['success'] = success;
     data['statusCode'] = statusCode;
     data['code'] = code;
-    data['massage'] = massage;
+    data['message'] = message;
     if (this.data.toString().isNotEmpty) {
       data['data'] = this.data!.toJson();
     }
@@ -39,7 +39,7 @@ class Data {
   int? id;
   String? email;
   String? nicename;
-  String? fristName;
+  String? firstName;
   String? lastName;
   String? displayName;
 
@@ -48,15 +48,16 @@ class Data {
     this.id,
     this.email,
     this.nicename,
-    this.fristName,
+    this.firstName,
     this.lastName,
     this.displayName,
   });
   Data.fromJson(Map<String, dynamic> json) {
     token = json['token'];
+    id = json['id'];
     email = json['email'];
     nicename = json['nicename'];
-    fristName = json['fristName'];
+    firstName = json['firstName'];
     lastName = json['lastName'];
     displayName = json['displayName'];
   }
@@ -64,9 +65,10 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['token'] = token;
+    data['id'] = id;
     data['email'] = email;
     data['nicename'] = nicename;
-    data['fristName'] = fristName;
+    data['firstName'] = firstName;
     data['lastName'] = lastName;
     data['displayName'] = displayName;
 
