@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wordpreesapp/ui/login/loginpage.dart';
- 
+import 'package:wordpreesapp/ui/root/root_page.dart';
+
 // import 'package:wordpreesapp/ui/singup/singup.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: Root(),
     );
   }
 }

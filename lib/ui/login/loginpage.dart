@@ -7,6 +7,7 @@ import 'package:wordpreesapp/ui/root/root_page.dart';
 import 'package:wordpreesapp/ui/singup/singup.dart';
 import 'package:wordpreesapp/ui/utils/custom_appbar.dart';
 import 'package:wordpreesapp/ui/utils/custom_dilog_box.dart';
+import 'package:wordpreesapp/ui/utils/exstanions.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -98,6 +99,9 @@ class _LoginState extends State<Login> {
                               if (value.toString().isEmpty) {
                                 return 'باید فیلد رو پر کنی';
                               }
+                              if (!value!.toString().isValidEmail) {
+                                return "ایمیل قوی نیست";
+                              }
                               return null;
                             },
                           ),
@@ -147,6 +151,7 @@ class _LoginState extends State<Login> {
                               if (value.toString().isEmpty) {
                                 return 'باید فیلد رو پر کنی';
                               }
+
                               return null;
                             },
                           ),
@@ -178,6 +183,9 @@ class _LoginState extends State<Login> {
                                   )
                                       .then(
                                     (retRes) {
+                                      debugPrint(retRes.data!.token);
+                                      debugPrint(
+                                          retRes.data!.toJson().toString());
                                       setState(() {
                                         apiCalled = false;
                                       });
