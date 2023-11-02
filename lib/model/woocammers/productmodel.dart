@@ -1,6 +1,5 @@
 // https://ahadyariya1387.ir/wp-json/wc/v3/products/
 
-import 'dart:convert';
 
 class Products {
   int? id;
@@ -9,7 +8,7 @@ class Products {
   String? shortDescription;
   String? price;
   String? regularPrice;
-  List<WooImage>? images;
+  List<WooImages>? images;
   List<Categories>? categories;
 
   Products({
@@ -22,7 +21,54 @@ class Products {
     this.images,
     this.categories,
   });
-  Products.fromJson(Map<String,dynamic> json){
+  Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
+    name = json['name'];
+    description = json['description'];
+    shortDescription = json['short_description'];
+    price = json['price'];
+    regularPrice = json['regular_price'];
+    if (json['images'] != null) {
+      images = <WooImages>[];
+      json['images'].forEach((v) {
+        images?.add(WooImages.fromJson(v));
+      });
+    }
+    if (json['categories'] != null) {
+      categories = <Categories>[];
+      json['images'].forEach((v) {
+        categories!.add(Categories.fromJson(v));
+      });
+    }
+  }
+}
+
+class WooImages {
+  String? src;
+  WooImages({this.src});
+
+  WooImages.fromJson(Map<String, dynamic> json) {
+    src = json['src'];
+  }
+}
+
+class Categories {
+  int? id;
+  String? name;
+
+  Categories({
+    this.id,
+    this.name,
+  });
+
+  Categories.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+  Map<String,dynamic> toJson(){
+    final  Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] =  id;
+    data['name'] = name;
+    return data;
   }
 }
