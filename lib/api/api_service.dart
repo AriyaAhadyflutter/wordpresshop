@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:wordpreesapp/contants/constants.dart';
 import 'package:wordpreesapp/model/woocammers/loginmodel.dart';
+import 'package:wordpreesapp/model/woocammers/productmodel.dart';
 import 'package:wordpreesapp/model/woocammers/register.dart';
 
 class ApiService {
+  // api ثبت نام 
   Future<bool> createCustomer(CustomerModel model) async {
     bool returnResponse = false;
     String authToken = base64.encode(
@@ -36,7 +38,7 @@ class ApiService {
     }
     return returnResponse;
   }
-
+  // api لاگین 
   Future<LoginResponseModel> loginCustomer(
     String username,
     String password,
@@ -63,5 +65,30 @@ class ApiService {
       throw 'error : $e';
     }
     return loginModel;
+  }
+  //لیست محصولات 
+  Future<List<Products>> getProducts() async {
+    final String productsURL =
+        "${WoocommerceConstants.baseUrl}${WoocommerceConstants.productUrl}?consumer_key=${WoocommerceConstants.consumerKey}?consumer_secret${WoocommerceConstants.consumerSecret}";
+    List<Products> productslist = <Products>[];
+
+    try {
+      Response response = await Dio().get(
+        productsURL,
+        options: Options(headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        }),
+      );
+      if (response.statusCode == 200) {
+        productslist = (response.data as List)
+            .map(
+              (i) => Products.fromJson(i),
+            )
+            .toList();
+      }
+    } on DioException catch (e) {
+      throw 'error : $e';
+    }
+    return productslist;
   }
 }
