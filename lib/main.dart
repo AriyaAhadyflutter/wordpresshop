@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wordpreesapp/provider/shop_provider.dart';
 import 'package:wordpreesapp/ui/root/root_page.dart';
 
 // import 'package:wordpreesapp/ui/singup/singup.dart';
@@ -12,9 +14,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Root(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context)=> ShopProvider(),),
+      ],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Root(),
+      ),
     );
   }
 }

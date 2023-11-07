@@ -1,6 +1,5 @@
 // https://ahadyariya1387.ir/wp-json/wc/v3/products/
 
-
 class Products {
   int? id;
   String? name;
@@ -36,7 +35,7 @@ class Products {
     }
     if (json['categories'] != null) {
       categories = <Categories>[];
-      json['images'].forEach((v) {
+      json['categories'].forEach((v) {
         categories!.add(Categories.fromJson(v));
       });
     }
@@ -65,9 +64,9 @@ class Categories {
     id = json['id'];
     name = json['name'];
   }
-  Map<String,dynamic> toJson(){
-    final  Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] =  id;
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
     data['name'] = name;
     return data;
   }

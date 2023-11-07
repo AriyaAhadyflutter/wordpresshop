@@ -7,7 +7,7 @@ import 'package:wordpreesapp/model/woocammers/productmodel.dart';
 import 'package:wordpreesapp/model/woocammers/register.dart';
 
 class ApiService {
-  // api ثبت نام 
+  // api ثبت نام
   Future<bool> createCustomer(CustomerModel model) async {
     bool returnResponse = false;
     String authToken = base64.encode(
@@ -38,7 +38,8 @@ class ApiService {
     }
     return returnResponse;
   }
-  // api لاگین 
+
+  // api لاگین
   Future<LoginResponseModel> loginCustomer(
     String username,
     String password,
@@ -66,29 +67,30 @@ class ApiService {
     }
     return loginModel;
   }
-  //لیست محصولات 
+
+  //لیست محصولات
   Future<List<Products>> getProducts() async {
-    final String productsURL =
-        "${WoocommerceConstants.baseUrl}${WoocommerceConstants.productUrl}?consumer_key=${WoocommerceConstants.consumerKey}?consumer_secret${WoocommerceConstants.consumerSecret}";
-    List<Products> productslist = <Products>[];
+     String productURL =
+        "${WoocommerceConstants.baseUrl}${WoocommerceConstants.productUrl}?consumer_key=${WoocommerceConstants.consumerKey}&consumer_secret=${WoocommerceConstants.consumerSecret}";
+    List<Products> productList = <Products>[];
 
     try {
       Response response = await Dio().get(
-        productsURL,
+        productURL,
         options: Options(headers: {
           HttpHeaders.contentTypeHeader: 'application/json',
         }),
       );
       if (response.statusCode == 200) {
-        productslist = (response.data as List)
+        productList = (response.data as List)
             .map(
               (i) => Products.fromJson(i),
             )
             .toList();
       }
     } on DioException catch (e) {
-      throw 'error : $e';
+      throw 'Error $e';
     }
-    return productslist;
+    return productList;
   }
 }
