@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:wordpreesapp/contants/constants.dart';
 import 'package:wordpreesapp/model/woocammers/loginmodel.dart';
+import 'package:wordpreesapp/model/woocammers/product_category_model.dart';
 import 'package:wordpreesapp/model/woocammers/productmodel.dart';
 import 'package:wordpreesapp/model/woocammers/register.dart';
 
@@ -92,5 +93,31 @@ class ApiService {
       throw 'Error $e';
     }
     return productList;
+  }
+//  کتگوری
+  Future<List<ProductCategory>> getProductCategory()async{
+     String productURL =
+        "${WoocommerceConstants.baseUrl}${WoocommerceConstants.productCategorytUrl}?consumer_key=${WoocommerceConstants.consumerKey}&consumer_secret=${WoocommerceConstants.consumerSecret}";
+    List<ProductCategory> productcategoryList = <ProductCategory>[];
+
+    try {
+      Response response = await Dio().get(
+        productURL,
+        options: Options(headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        }),
+      );
+      if (response.statusCode == 200) {
+        productcategoryList = (response.data as List)
+            .map(
+              (i) => ProductCategory.fromJson(i),
+            )
+            .toList();
+      }
+    } on DioException catch (e) {
+      throw 'Error $e';
+    }
+    return productcategoryList;
+
   }
 }

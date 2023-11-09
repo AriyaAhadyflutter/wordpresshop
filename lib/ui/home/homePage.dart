@@ -20,13 +20,13 @@ class _HomePageState extends State<HomePage> {
     return !isFavorite;
   }
 
-  final List<String> plantType = [
-    '| پیشنهادی |',
-    '| آپارتمانی |',
-    '| محل کار |',
-    '|گل باغچه‌ای|',
-    '| گل سمی |',
-  ];
+  // final List<String> plantType = [
+  //   '| پیشنهادی |',
+  //   '| آپارتمانی |',
+  //   '| محل کار |',
+  //   '|گل باغچه‌ای|',
+  //   '| گل سمی |',
+  // ];
 
   @override
   void initState() {
@@ -34,6 +34,7 @@ class _HomePageState extends State<HomePage> {
       ShopProvider productList =
           Provider.of<ShopProvider>(context, listen: false);
       productList.getAllProducts();
+      productList.getAllCategoryNames();
     });
     super.initState();
   }
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.builder(
                     reverse: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: plantType.length,
+                    itemCount: value.productCategory.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -122,7 +123,8 @@ class _HomePageState extends State<HomePage> {
                             });
                           },
                           child: Text(
-                            plantType[index],
+                            value.productCategory[index].categoryName
+                                .toString(),
                             style: TextStyle(
                               fontFamily: 'iranSans',
                               fontSize: 16,
