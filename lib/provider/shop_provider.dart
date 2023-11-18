@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wordpreesapp/api/api_service.dart';
+import 'package:wordpreesapp/model/woocammers/postmodel.dart';
 import 'package:wordpreesapp/model/woocammers/product_category_model.dart';
 
 import 'package:wordpreesapp/model/woocammers/productmodel.dart';
@@ -17,9 +18,13 @@ class ShopProvider extends ChangeNotifier {
   List<Products> _products = <Products>[];
   List<Products> get product => _products;
 //
-  // store all products
+  // store all category products
   List<ProductCategory> _productCategory = <ProductCategory>[];
   List<ProductCategory> get productCategory => _productCategory;
+//
+  //
+  List<PostsModel> _postModel = <PostsModel>[];
+  List<PostsModel> get postsModel => _postModel;
 
   Future<void> getAllCategoryNames() async {
     isLoading = true;
@@ -36,6 +41,14 @@ class ShopProvider extends ChangeNotifier {
     notifyListeners();
     final List<Products> response = await _apiService!.getProducts();
     _products = response;
+    isLoading = false;
+    notifyListeners();
+  }
+    Future<void> getAllPosts() async {
+    isLoading = true;
+    notifyListeners();
+    final List<PostsModel> response = await _apiService!.getposts();
+    _postModel = response;
     isLoading = false;
     notifyListeners();
   }

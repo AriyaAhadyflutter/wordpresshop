@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:wordpreesapp/contants/constants.dart';
 import 'package:wordpreesapp/model/woocammers/loginmodel.dart';
+import 'package:wordpreesapp/model/woocammers/postmodel.dart';
 import 'package:wordpreesapp/model/woocammers/product_category_model.dart';
 import 'package:wordpreesapp/model/woocammers/productmodel.dart';
 import 'package:wordpreesapp/model/woocammers/register.dart';
@@ -71,7 +72,7 @@ class ApiService {
 
   //لیست محصولات
   Future<List<Products>> getProducts() async {
-     String productURL =
+    String productURL =
         "${WoocommerceConstants.baseUrl}${WoocommerceConstants.productUrl}?consumer_key=${WoocommerceConstants.consumerKey}&consumer_secret=${WoocommerceConstants.consumerSecret}";
     List<Products> productList = <Products>[];
 
@@ -94,9 +95,10 @@ class ApiService {
     }
     return productList;
   }
+
 //  کتگوری
-  Future<List<ProductCategory>> getProductCategory()async{
-     String productURL =
+  Future<List<ProductCategory>> getProductCategory() async {
+    String productURL =
         "${WoocommerceConstants.baseUrl}${WoocommerceConstants.productCategorytUrl}?consumer_key=${WoocommerceConstants.consumerKey}&consumer_secret=${WoocommerceConstants.consumerSecret}";
     List<ProductCategory> productcategoryList = <ProductCategory>[];
 
@@ -118,6 +120,29 @@ class ApiService {
       throw 'Error $e';
     }
     return productcategoryList;
+  }
 
+  Future<List<PostsModel>> getposts() async {
+    String productURL = "https://ahadyariya1387.ir/wp-json/wp/v2/posts";
+    List<PostsModel> postsList = <PostsModel>[];
+
+    try {
+      Response response = await Dio().get(
+        productURL,
+        options: Options(headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        }),
+      );
+      if (response.statusCode == 200) {
+        postsList = (response.data as List)
+            .map(
+              (i) => PostsModel.fromJson(i),
+            )
+            .toList();
+      }
+    } on DioException catch (e) {
+      throw 'Error $e';
+    }
+    return postsList;
   }
 }

@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
           Provider.of<ShopProvider>(context, listen: false);
       productList.getAllProducts();
       productList.getAllCategoryNames();
+      productList.getAllPosts();
     });
     super.initState();
   }
@@ -115,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                     itemCount: value.productCategory.length,
                     itemBuilder: (context, index) {
                       return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.fromLTRB(8, 8, 25, 8),
                         child: GestureDetector(
                           onTap: () {
                             setState(() {
@@ -127,7 +128,7 @@ class _HomePageState extends State<HomePage> {
                                 .toString(),
                             style: TextStyle(
                               fontFamily: 'iranSans',
-                              fontSize: 16,
+                              fontSize: 18,
                               fontWeight: selectedIndex == index
                                   ? FontWeight.bold
                                   : FontWeight.w300,
@@ -275,7 +276,7 @@ class _HomePageState extends State<HomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 18),
                   height: size.height * 0.3,
                   child: ListView.builder(
-                    itemCount: value.product.length,
+                    itemCount: value.postsModel.length,
                     physics: const BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       return GestureDetector(
@@ -309,44 +310,20 @@ class _HomePageState extends State<HomePage> {
                               Stack(
                                 clipBehavior: Clip.none,
                                 children: [
-                                  Container(
+                                  const SizedBox(
                                     width: 60,
                                     height: 60,
-                                    decoration: BoxDecoration(
-                                      color: MyConstantsSC.primarycolor
-                                          .withOpacity(0.8),
-                                      shape: BoxShape.circle,
-                                    ),
                                   ),
                                   Positioned(
-                                    bottom: -10,
-                                    left: 0,
-                                    right: 0,
-                                    child: SizedBox(
-                                      height: 80,
-                                      child: Image.network(value
-                                          .product[index].images![0].src
-                                          .toString()),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 5,
-                                    right: 80,
+                                    bottom: 20,
+                                    right: 55,
                                     child: Column(
                                       children: [
                                         Text(
-                                          value.product[index].categories![0]
-                                              .name
+                                          value.postsModel[index].title
                                               .toString(),
                                           style: const TextStyle(
-                                            fontSize: 15,
-                                            fontFamily: 'Lalezar',
-                                          ),
-                                        ),
-                                        Text(
-                                          value.product[index].name.toString(),
-                                          style: const TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 25,
                                             fontFamily: 'Lalezar',
                                           ),
                                         ),
