@@ -15,17 +15,21 @@ class ShopProvider extends ChangeNotifier {
 
   bool isLoading = false;
   // store all products
-  List<Products> _products = <Products>[];
-  List<Products> get product => _products;
+  // List<Products> _products = <Products>[];
+  // List<Products> get product => _products;
 //
   // store all category products
   List<ProductCategory> _productCategory = <ProductCategory>[];
   List<ProductCategory> get productCategory => _productCategory;
 //
-  //
+  // store all products with category name
+  List<Products> _productByCategory = <Products>[];
+  List<Products> get productByCategory => _productByCategory;
+//
+  // store all posts
   List<PostsModel> _postModel = <PostsModel>[];
   List<PostsModel> get postsModel => _postModel;
-
+//
   Future<void> getAllCategoryNames() async {
     isLoading = true;
     notifyListeners();
@@ -36,15 +40,25 @@ class ShopProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getAllProducts() async {
+  // Future<void> getAllProducts() async {
+  //   isLoading = true;
+  //   notifyListeners();
+  //   final List<Products> response = await _apiService!.getProducts();
+  //   _products = response;
+  //   isLoading = false;
+  //   notifyListeners();
+  // }
+
+  Future<void>  getProductByCategory(String categoryId) async {
     isLoading = true;
     notifyListeners();
-    final List<Products> response = await _apiService!.getProducts();
-    _products = response;
+    final List<Products> productByCategoryresponse = await _apiService!.getProductCategoryById(categoryId);
+    _productByCategory = productByCategoryresponse;
     isLoading = false;
     notifyListeners();
   }
-    Future<void> getAllPosts() async {
+
+  Future<void> getAllPosts() async {
     isLoading = true;
     notifyListeners();
     final List<PostsModel> response = await _apiService!.getposts();

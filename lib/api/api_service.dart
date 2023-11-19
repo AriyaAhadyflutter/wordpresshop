@@ -121,6 +121,8 @@ class ApiService {
     }
     return productcategoryList;
   }
+  
+  // نمایش پوست 
 
   Future<List<PostsModel>> getposts() async {
     String productURL = "https://ahadyariya1387.ir/wp-json/wp/v2/posts";
@@ -144,5 +146,32 @@ class ApiService {
       throw 'Error $e';
     }
     return postsList;
+  }
+
+  // کتگوری براساس ای دی
+
+    Future<List<Products>> getProductCategoryById(String catId) async {
+    String productURL =
+        "${WoocommerceConstants.baseUrl}${WoocommerceConstants.productUrl}?category=$catId&consumer_key=${WoocommerceConstants.consumerKey}&consumer_secret=${WoocommerceConstants.consumerSecret}";
+    List<Products> productcategoryList = <Products>[];
+
+    try {
+      Response response = await Dio().get(
+        productURL,
+        options: Options(headers: {
+          HttpHeaders.contentTypeHeader: 'application/json',
+        }),
+      );
+      if (response.statusCode == 200) {
+        productcategoryList = (response.data as List)
+            .map(
+              (i) => Products.fromJson(i),
+            )
+            .toList();
+      }
+    } on DioException catch (e) {
+      throw 'Error $e';
+    }
+    return productcategoryList;
   }
 }

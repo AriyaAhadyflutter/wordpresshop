@@ -33,8 +33,9 @@ class _HomePageState extends State<HomePage> {
     Future.delayed(Duration.zero).then((value) {
       ShopProvider productList =
           Provider.of<ShopProvider>(context, listen: false);
-      productList.getAllProducts();
+      // productList.getAllProducts();
       productList.getAllCategoryNames();
+      productList.getProductByCategory('20');
       productList.getAllPosts();
     });
     super.initState();
@@ -119,8 +120,11 @@ class _HomePageState extends State<HomePage> {
                         padding: const EdgeInsets.fromLTRB(8, 8, 25, 8),
                         child: GestureDetector(
                           onTap: () {
+                            final categoryId =
+                                value.productCategory[index].categoryId;
                             setState(() {
                               selectedIndex = index;
+                              value.getProductByCategory(categoryId.toString());
                             });
                           },
                           child: Text(
@@ -149,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.builder(
                     reverse: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: value.product.length,
+                    itemCount: value.productByCategory.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {},
@@ -190,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                                 top: 50,
                                 bottom: 50,
                                 child: Image.network(
-                                  value.product[index].images![0].src
+                                  value.productByCategory[index].images![0].src
                                       .toString(),
                                   fit: BoxFit.cover,
                                 ),
@@ -206,7 +210,7 @@ class _HomePageState extends State<HomePage> {
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                   child: Text(
-                                    '${numberFormat.format(int.parse(value.product[index].price.toString()))} تومان'
+                                    '${numberFormat.format(int.parse(value.productByCategory[index].price.toString()))} تومان'
                                         .farsiNumbers,
                                     style: TextStyle(
                                       fontFamily: 'Lalezar',
@@ -225,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      value.product[index].categories![0].name
+                                      value.productByCategory[index].categories![0].name
                                           .toString(),
                                       style: const TextStyle(
                                           fontFamily: ('Lalezar'),
@@ -234,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                                           fontWeight: FontWeight.w500),
                                     ),
                                     Text(
-                                      value.product[index].name.toString(),
+                                      value.productByCategory[index].name.toString(),
                                       style: const TextStyle(
                                           fontFamily: ('Yekanplus'),
                                           color: Colors.white70,
