@@ -3,6 +3,7 @@ import 'package:intl/intl.dart' show NumberFormat;
 import 'package:provider/provider.dart';
 
 import 'package:wordpreesapp/contants/constants.dart';
+import 'package:wordpreesapp/model/woocammers/productmodel.dart';
 import 'package:wordpreesapp/provider/shop_provider.dart';
 import 'package:wordpreesapp/ui/utils/exstanions.dart';
 
@@ -20,13 +21,12 @@ class _HomePageState extends State<HomePage> {
     return !isFavorite;
   }
 
-  // final List<String> plantType = [
-  //   '| پیشنهادی |',
-  //   '| آپارتمانی |',
-  //   '| محل کار |',
-  //   '|گل باغچه‌ای|',
-  //   '| گل سمی |',
-  // ];
+  List<Categories> productsCategoyNames = <Categories>[
+    Categories(orderId: 1, id: 17, name: '|گرانولا|'),
+    Categories(orderId: 2, id: 19, name: '|موسلی|'),
+    Categories(orderId: 3, id: 20, name: '|کوکی|'),
+    Categories(orderId: 4, id: 22, name: '|کوکی رژیمی|'),
+  ];
 
   @override
   void initState() {
@@ -35,9 +35,12 @@ class _HomePageState extends State<HomePage> {
           Provider.of<ShopProvider>(context, listen: false);
       // productList.getAllProducts();
       productList.getAllCategoryNames();
-      productList.getProductByCategory('20');
+      productList.getProductByCategory('17');
       productList.getAllPosts();
     });
+    productsCategoyNames.sort(
+      (a, b) => a.orderId!.compareTo(b.orderId as num),
+    );
     super.initState();
   }
 
@@ -114,22 +117,20 @@ class _HomePageState extends State<HomePage> {
                   child: ListView.builder(
                     reverse: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: value.productCategory.length,
+                    itemCount: productsCategoyNames.length,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.fromLTRB(8, 8, 25, 8),
                         child: GestureDetector(
                           onTap: () {
-                            final categoryId =
-                                value.productCategory[index].categoryId;
+                            final categoryId = productsCategoyNames[index].id;
                             setState(() {
                               selectedIndex = index;
                               value.getProductByCategory(categoryId.toString());
                             });
                           },
                           child: Text(
-                            value.productCategory[index].categoryName
-                                .toString(),
+                            productsCategoyNames[index].name.toString(),
                             style: TextStyle(
                               fontFamily: 'iranSans',
                               fontSize: 18,
@@ -229,7 +230,8 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
                                     Text(
-                                      value.productByCategory[index].categories![0].name
+                                      value.productByCategory[index]
+                                          .categories![0].name
                                           .toString(),
                                       style: const TextStyle(
                                           fontFamily: ('Lalezar'),
@@ -238,7 +240,8 @@ class _HomePageState extends State<HomePage> {
                                           fontWeight: FontWeight.w500),
                                     ),
                                     Text(
-                                      value.productByCategory[index].name.toString(),
+                                      value.productByCategory[index].name
+                                          .toString(),
                                       style: const TextStyle(
                                           fontFamily: ('Yekanplus'),
                                           color: Colors.white70,

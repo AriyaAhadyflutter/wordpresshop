@@ -52,10 +52,12 @@ class WooImages {
 }
 
 class Categories {
+  num? orderId;
   int? id;
   String? name;
 
   Categories({
+    this.orderId,
     this.id,
     this.name,
   });
