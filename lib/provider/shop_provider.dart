@@ -30,6 +30,7 @@ class ShopProvider extends ChangeNotifier {
   List<PostsModel> _postModel = <PostsModel>[];
   List<PostsModel> get postsModel => _postModel;
 //
+
   Future<void> getAllCategoryNames() async {
     isLoading = true;
     notifyListeners();
@@ -66,6 +67,9 @@ class ShopProvider extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+
+
+
 
   void initialaizeData() {
     _apiService = ApiService();

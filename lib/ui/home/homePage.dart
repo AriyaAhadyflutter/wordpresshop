@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show NumberFormat;
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 import 'package:wordpreesapp/contants/constants.dart';
 import 'package:wordpreesapp/model/woocammers/productmodel.dart';
 import 'package:wordpreesapp/provider/shop_provider.dart';
 import 'package:wordpreesapp/ui/utils/exstanions.dart';
+import 'package:wordpreesapp/ui/weblogPostPage/post_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -15,6 +17,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool isTextVisible = false;
+
   int selectedIndex = 0;
 
   bool toggleIsFavorit(bool isFavorite) {
@@ -156,109 +160,128 @@ class _HomePageState extends State<HomePage> {
                     scrollDirection: Axis.horizontal,
                     itemCount: value.productByCategory.length,
                     itemBuilder: (context, index) {
+                      if (value.productByCategory[index].id
+                          .toString()
+                          .isEmpty) {
+                        setState(() {
+                          isTextVisible = true;
+                        });
+                      }
                       return GestureDetector(
                         onTap: () {},
-                        child: Container(
-                          width: 200,
-                          margin: const EdgeInsets.symmetric(horizontal: 18),
-                          decoration: BoxDecoration(
-                            color: MyConstantsSC.primarycolor.withOpacity(0.8),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Stack(
-                            children: [
-                              Positioned(
-                                top: 10,
-                                right: 20,
-                                child: Container(
-                                  height: 40,
-                                  width: 40,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(50),
-                                  ),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      setState(() {});
-                                    },
-                                    icon: Icon(
-                                      Icons.favorite,
-                                      size: 20,
-                                      color: MyConstantsSC.primarycolor,
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 200,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 18),
+                              decoration: BoxDecoration(
+                                color:
+                                    MyConstantsSC.primarycolor.withOpacity(0.8),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Stack(
+                                children: [
+                                  Positioned(
+                                    top: 10,
+                                    right: 20,
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          setState(() {});
+                                        },
+                                        icon: Icon(
+                                          Icons.favorite,
+                                          size: 20,
+                                          color: MyConstantsSC.primarycolor,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              Positioned(
-                                left: 50,
-                                right: 50,
-                                top: 50,
-                                bottom: 50,
-                                child: Image.network(
-                                  value.productByCategory[index].images![0].src
-                                      .toString(),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 15,
-                                left: 5,
-                                child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12, vertical: 4),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Text(
-                                    '${numberFormat.format(int.parse(value.productByCategory[index].price.toString()))} تومان'
-                                        .farsiNumbers,
-                                    style: TextStyle(
-                                      fontFamily: 'Lalezar',
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                      color: MyConstantsSC.primarycolor,
-                                    ),
-                                    textDirection: TextDirection.rtl,
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 15,
-                                right: 10,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      value.productByCategory[index]
-                                          .categories![0].name
+                                  Positioned(
+                                    left: 50,
+                                    right: 50,
+                                    top: 50,
+                                    bottom: 50,
+                                    child: Image.network(
+                                      value.productByCategory[index].images![0]
+                                          .src
                                           .toString(),
-                                      style: const TextStyle(
-                                          fontFamily: ('Lalezar'),
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
                                     ),
-                                    Text(
-                                      value.productByCategory[index].name
-                                          .toString(),
-                                      style: const TextStyle(
-                                          fontFamily: ('Yekanplus'),
-                                          color: Colors.white70,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600),
+                                  ),
+                                  Positioned(
+                                    bottom: 15,
+                                    left: 5,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Text(
+                                        '${numberFormat.format(int.parse(value.productByCategory[index].price.toString()))} تومان'
+                                            .farsiNumbers,
+                                        style: TextStyle(
+                                          fontFamily: 'Lalezar',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: MyConstantsSC.primarycolor,
+                                        ),
+                                        textDirection: TextDirection.rtl,
+                                      ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Positioned(
+                                    bottom: 15,
+                                    right: 10,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          value.productByCategory[index]
+                                              .categories![0].name
+                                              .toString(),
+                                          style: const TextStyle(
+                                              fontFamily: ('Lalezar'),
+                                              color: Colors.black,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        Text(
+                                          value.productByCategory[index].name
+                                              .toString(),
+                                          style: const TextStyle(
+                                            fontFamily: ('Yekanplus'),
+                                            color: Colors.white70,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       );
                     },
                   ),
                 ),
-                //product Text
+
+                Visibility(
+                  visible: isTextVisible,
+                  child: const Text('dfkjvnfdvnls'),
+                ),
 
                 Container(
                   alignment: Alignment.centerRight,
@@ -277,7 +300,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
 
-                //product list two
+                // مطالب وبلاگ
 
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 18),
@@ -304,12 +327,27 @@ class _HomePageState extends State<HomePage> {
                               Row(
                                 children: [
                                   const SizedBox(width: 5),
-                                  Text(
-                                    'کلیک کنید ',
-                                    style: TextStyle(
-                                      fontFamily: 'Lalezar',
-                                      color: MyConstantsSC.primarycolor,
-                                      fontSize: 20,
+                                  GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        Navigator.push(
+                                          context,
+                                          PageTransition(
+                                              child: PostsPage(
+                                                  postId: value
+                                                      .postsModel[index].id!
+                                                      .toInt()),
+                                              type: PageTransitionType.fade),
+                                        );
+                                      });
+                                    },
+                                    child: Text(
+                                      'کلیک کنید ',
+                                      style: TextStyle(
+                                        fontFamily: 'Lalezar',
+                                        color: MyConstantsSC.primarycolor,
+                                        fontSize: 20,
+                                      ),
                                     ),
                                   )
                                 ],
