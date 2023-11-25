@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:wordpreesapp/contants/constants.dart';
 import 'package:wordpreesapp/model/woocammers/loginmodel.dart';
-import 'package:wordpreesapp/model/woocammers/postmodel.dart';
+import 'package:wordpreesapp/model/wordpress/postmodel.dart';
 import 'package:wordpreesapp/model/woocammers/product_category_model.dart';
 import 'package:wordpreesapp/model/woocammers/productmodel.dart';
 import 'package:wordpreesapp/model/woocammers/register.dart';

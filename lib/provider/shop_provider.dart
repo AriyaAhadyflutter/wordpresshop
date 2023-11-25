@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:wordpreesapp/api/api_service.dart';
-import 'package:wordpreesapp/model/woocammers/postmodel.dart';
+import 'package:wordpreesapp/model/wordpress/postmodel.dart';
 import 'package:wordpreesapp/model/woocammers/product_category_model.dart';
 
 import 'package:wordpreesapp/model/woocammers/productmodel.dart';
