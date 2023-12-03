@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:wordpreesapp/contants/constants.dart';
+import 'package:wordpreesapp/model/wordpress/postmodel.dart';
 import 'package:wordpreesapp/provider/shop_provider.dart';
 
 class PostsPage extends StatefulWidget {
-  final int? postId;
+  final PostsModel? postsModel;
   const PostsPage({
-    Key? key,
-    this.postId,
-  }) : super(key: key);
+    super.key,
+    this.postsModel,
+  });
 
   @override
   State<PostsPage> createState() => _PostsPageState();
@@ -70,17 +71,21 @@ class _PostsPageState extends State<PostsPage> {
             ),
           ),
         ),
-        body: Center(
-          child: ListView.builder(
-              itemCount: value.postsModel.length,
-              itemBuilder: (context, index) {
-                if (index <= value.postsModel.length) {
-                  return Text(value.postsModel[widget.postId!.toInt()].content
-                      .toString());
-                } else {
-                  return SizedBox.shrink();
-                }
-              }),
+        body: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+              child: Text(
+                widget.postsModel!.content.toString(),
+                style: TextStyle(
+                  fontFamily: 'iranSans',
+                  fontSize: 19,
+                  fontWeight: FontWeight.w700,
+                  color: MyConstantsSC.blackcolor.withOpacity(0.7),
+                ),
+              ),
+            ),
+          ),
         ),
       );
     });

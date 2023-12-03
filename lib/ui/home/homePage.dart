@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:wordpreesapp/contants/constants.dart';
 import 'package:wordpreesapp/model/woocammers/productmodel.dart';
 import 'package:wordpreesapp/provider/shop_provider.dart';
+import 'package:wordpreesapp/ui/produt_detail/product_detail_page.dart';
 import 'package:wordpreesapp/ui/utils/exstanions.dart';
 import 'package:wordpreesapp/ui/weblogPostPage/post_page.dart';
 
@@ -155,127 +156,122 @@ class _HomePageState extends State<HomePage> {
 
                 SizedBox(
                   height: size.height * 0.3,
-                  child: value.isLoading
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : ListView.builder(
-                          reverse: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: value.productByCategory.length,
-                          itemBuilder: (context, index) {
-                            if (value.productByCategory[index].id
-                                .toString()
-                                .isEmpty) {
-                              setState(() {
-                                isTextVisible = true;
-                              });
-                            }
-                            return GestureDetector(
-                              onTap: () {},
+                  child: ListView.builder(
+                    reverse: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: value.productByCategory.length,
+                    itemBuilder: (context, index) {
+                      if (value.productByCategory[index].id
+                          .toString()
+                          .isEmpty) {
+                        setState(() {
+                          isTextVisible = true;
+                        });
+                      }
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                child: ProductDetail(
+                                    products: value.productByCategory[index]),
+                                type: PageTransitionType.fade,
+                              ));
+                        },
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 200,
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 18),
+                              decoration: BoxDecoration(
+                                color:
+                                    MyConstantsSC.primarycolor.withOpacity(0.8),
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               child: Stack(
                                 children: [
-                                  Container(
-                                    width: 200,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 18),
-                                    decoration: BoxDecoration(
-                                      color: MyConstantsSC.primarycolor
-                                          .withOpacity(0.8),
-                                      borderRadius: BorderRadius.circular(20),
+                                  Positioned(
+                                    top: 10,
+                                    right: 20,
+                                    child: Container(
+                                      height: 40,
+                                      width: 40,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          setState(() {});
+                                        },
+                                        icon: Icon(
+                                          Icons.favorite,
+                                          size: 20,
+                                          color: MyConstantsSC.primarycolor,
+                                        ),
+                                      ),
                                     ),
-                                    child: Stack(
+                                  ),
+                                  Positioned(
+                                    left: 50,
+                                    right: 50,
+                                    top: 50,
+                                    bottom: 50,
+                                    child: Image.network(
+                                      value.productByCategory[index].images![0]
+                                          .src
+                                          .toString(),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 15,
+                                    left: 5,
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 12, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Text(
+                                        '${numberFormat.format(int.parse(value.productByCategory[index].price.toString()))} تومان'
+                                            .farsiNumbers,
+                                        style: TextStyle(
+                                          fontFamily: 'Lalezar',
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: MyConstantsSC.primarycolor,
+                                        ),
+                                        textDirection: TextDirection.rtl,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 15,
+                                    right: 10,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.end,
                                       children: [
-                                        Positioned(
-                                          top: 10,
-                                          right: 20,
-                                          child: Container(
-                                            height: 40,
-                                            width: 40,
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                            ),
-                                            child: IconButton(
-                                              onPressed: () {
-                                                setState(() {});
-                                              },
-                                              icon: Icon(
-                                                Icons.favorite,
-                                                size: 20,
-                                                color:
-                                                    MyConstantsSC.primarycolor,
-                                              ),
-                                            ),
-                                          ),
+                                        Text(
+                                          value.productByCategory[index]
+                                              .categories![0].name
+                                              .toString(),
+                                          style: const TextStyle(
+                                              fontFamily: ('Lalezar'),
+                                              color: Colors.black,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500),
                                         ),
-                                        Positioned(
-                                          left: 50,
-                                          right: 50,
-                                          top: 50,
-                                          bottom: 50,
-                                          child: Image.network(
-                                            value.productByCategory[index]
-                                                .images![0].src
-                                                .toString(),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          bottom: 15,
-                                          left: 5,
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 12, vertical: 4),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            child: Text(
-                                              '${numberFormat.format(int.parse(value.productByCategory[index].price.toString()))} تومان'
-                                                  .farsiNumbers,
-                                              style: TextStyle(
-                                                fontFamily: 'Lalezar',
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color:
-                                                    MyConstantsSC.primarycolor,
-                                              ),
-                                              textDirection: TextDirection.rtl,
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          bottom: 15,
-                                          right: 10,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                value.productByCategory[index]
-                                                    .categories![0].name
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                    fontFamily: ('Lalezar'),
-                                                    color: Colors.black,
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
-                                              Text(
-                                                value.productByCategory[index]
-                                                    .name
-                                                    .toString(),
-                                                style: const TextStyle(
-                                                  fontFamily: ('Yekanplus'),
-                                                  color: Colors.white70,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ],
+                                        Text(
+                                          value.productByCategory[index].name
+                                              .toString(),
+                                          style: const TextStyle(
+                                            fontFamily: ('Yekanplus'),
+                                            color: Colors.white70,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
                                           ),
                                         ),
                                       ],
@@ -283,9 +279,12 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ],
                               ),
-                            );
-                          },
+                            ),
+                          ],
                         ),
+                      );
+                    },
+                  ),
                 ),
 
                 // نوشته
@@ -349,9 +348,8 @@ class _HomePageState extends State<HomePage> {
                                                 context,
                                                 PageTransition(
                                                     child: PostsPage(
-                                                        postId: value
-                                                            .postsModel[index]
-                                                            .id),
+                                                      postsModel: value.postsModel[index],
+                                                        ),
                                                     type: PageTransitionType
                                                         .fade),
                                               );
