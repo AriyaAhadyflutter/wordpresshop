@@ -6,9 +6,9 @@ import 'package:wordpreesapp/provider/shop_provider.dart';
 class PostsPage extends StatefulWidget {
   final int? postId;
   const PostsPage({
-    super.key,
-    required this.postId,
-  });
+    Key? key,
+    this.postId,
+  }) : super(key: key);
 
   @override
   State<PostsPage> createState() => _PostsPageState();
@@ -72,11 +72,15 @@ class _PostsPageState extends State<PostsPage> {
         ),
         body: Center(
           child: ListView.builder(
-            itemCount: value.postsModel.length,
-            itemBuilder: (context, index) {
-              return Text(value.postsModel[widget.postId!.toInt()].content.toString());
-            },
-          ),
+              itemCount: value.postsModel.length,
+              itemBuilder: (context, index) {
+                if (index <= value.postsModel.length) {
+                  return Text(value.postsModel[widget.postId!.toInt()].content
+                      .toString());
+                } else {
+                  return SizedBox.shrink();
+                }
+              }),
         ),
       );
     });

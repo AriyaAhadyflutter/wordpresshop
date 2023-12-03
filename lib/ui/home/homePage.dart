@@ -54,11 +54,11 @@ class _HomePageState extends State<HomePage> {
     NumberFormat numberFormat = NumberFormat.decimalPattern('fa');
 
     return Consumer<ShopProvider>(builder: (context, value, child) {
-      if (value.isLoading) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      }
+      // if (value.isLoading) {
+      //   return const Center(
+      //     child: CircularProgressIndicator(),
+      //   );
+      // }
 
       return Scaffold(
         body: SingleChildScrollView(
@@ -155,114 +155,127 @@ class _HomePageState extends State<HomePage> {
 
                 SizedBox(
                   height: size.height * 0.3,
-                  child: ListView.builder(
-                    reverse: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: value.productByCategory.length,
-                    itemBuilder: (context, index) {
-                      if (value.productByCategory[index].id
-                          .toString()
-                          .isEmpty) {
-                        setState(() {
-                          isTextVisible = true;
-                        });
-                      }
-                      return GestureDetector(
-                        onTap: () {},
-                        child: Stack(
-                          children: [
-                            Container(
-                              width: 200,
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 18),
-                              decoration: BoxDecoration(
-                                color:
-                                    MyConstantsSC.primarycolor.withOpacity(0.8),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
+                  child: value.isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ListView.builder(
+                          reverse: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: value.productByCategory.length,
+                          itemBuilder: (context, index) {
+                            if (value.productByCategory[index].id
+                                .toString()
+                                .isEmpty) {
+                              setState(() {
+                                isTextVisible = true;
+                              });
+                            }
+                            return GestureDetector(
+                              onTap: () {},
                               child: Stack(
                                 children: [
-                                  Positioned(
-                                    top: 10,
-                                    right: 20,
-                                    child: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                      child: IconButton(
-                                        onPressed: () {
-                                          setState(() {});
-                                        },
-                                        icon: Icon(
-                                          Icons.favorite,
-                                          size: 20,
-                                          color: MyConstantsSC.primarycolor,
-                                        ),
-                                      ),
+                                  Container(
+                                    width: 200,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 18),
+                                    decoration: BoxDecoration(
+                                      color: MyConstantsSC.primarycolor
+                                          .withOpacity(0.8),
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
-                                  ),
-                                  Positioned(
-                                    left: 50,
-                                    right: 50,
-                                    top: 50,
-                                    bottom: 50,
-                                    child: Image.network(
-                                      value.productByCategory[index].images![0]
-                                          .src
-                                          .toString(),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 15,
-                                    left: 5,
-                                    child: Container(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 12, vertical: 4),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Text(
-                                        '${numberFormat.format(int.parse(value.productByCategory[index].price.toString()))} تومان'
-                                            .farsiNumbers,
-                                        style: TextStyle(
-                                          fontFamily: 'Lalezar',
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.bold,
-                                          color: MyConstantsSC.primarycolor,
-                                        ),
-                                        textDirection: TextDirection.rtl,
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    bottom: 15,
-                                    right: 10,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                    child: Stack(
                                       children: [
-                                        Text(
-                                          value.productByCategory[index]
-                                              .categories![0].name
-                                              .toString(),
-                                          style: const TextStyle(
-                                              fontFamily: ('Lalezar'),
-                                              color: Colors.black,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500),
+                                        Positioned(
+                                          top: 10,
+                                          right: 20,
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                            ),
+                                            child: IconButton(
+                                              onPressed: () {
+                                                setState(() {});
+                                              },
+                                              icon: Icon(
+                                                Icons.favorite,
+                                                size: 20,
+                                                color:
+                                                    MyConstantsSC.primarycolor,
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                        Text(
-                                          value.productByCategory[index].name
-                                              .toString(),
-                                          style: const TextStyle(
-                                            fontFamily: ('Yekanplus'),
-                                            color: Colors.white70,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
+                                        Positioned(
+                                          left: 50,
+                                          right: 50,
+                                          top: 50,
+                                          bottom: 50,
+                                          child: Image.network(
+                                            value.productByCategory[index]
+                                                .images![0].src
+                                                .toString(),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          bottom: 15,
+                                          left: 5,
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 12, vertical: 4),
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: Text(
+                                              '${numberFormat.format(int.parse(value.productByCategory[index].price.toString()))} تومان'
+                                                  .farsiNumbers,
+                                              style: TextStyle(
+                                                fontFamily: 'Lalezar',
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color:
+                                                    MyConstantsSC.primarycolor,
+                                              ),
+                                              textDirection: TextDirection.rtl,
+                                            ),
+                                          ),
+                                        ),
+                                        Positioned(
+                                          bottom: 15,
+                                          right: 10,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                value.productByCategory[index]
+                                                    .categories![0].name
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    fontFamily: ('Lalezar'),
+                                                    color: Colors.black,
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                              Text(
+                                                value.productByCategory[index]
+                                                    .name
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                  fontFamily: ('Yekanplus'),
+                                                  color: Colors.white70,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -270,18 +283,12 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
                 ),
 
-                Visibility(
-                  visible: isTextVisible,
-                  child: const Text('dfkjvnfdvnls'),
-                ),
+                // نوشته
 
                 Container(
                   alignment: Alignment.centerRight,
@@ -305,84 +312,93 @@ class _HomePageState extends State<HomePage> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 18),
                   height: size.height * 0.3,
-                  child: ListView.builder(
-                    itemCount: value.postsModel.length,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: MyConstantsSC.primarycolor.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          height: 80,
-                          width: size.width,
-                          margin: const EdgeInsets.only(bottom: 10, top: 10),
-                          padding: const EdgeInsets.only(left: 10, top: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  const SizedBox(width: 5),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        Navigator.push(
-                                          context,
-                                          PageTransition(
-                                              child: PostsPage(
-                                                  postId: value
-                                                      .postsModel[index].id!
-                                                      .toInt()),
-                                              type: PageTransitionType.fade),
-                                        );
-                                      });
-                                    },
-                                    child: Text(
-                                      'کلیک کنید ',
-                                      style: TextStyle(
-                                        fontFamily: 'Lalezar',
-                                        color: MyConstantsSC.primarycolor,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  const SizedBox(
-                                    width: 60,
-                                    height: 60,
-                                  ),
-                                  Positioned(
-                                    bottom: 20,
-                                    right: 55,
-                                    child: Column(
+                  child: value.isLoadingPost
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ListView.builder(
+                          itemCount: value.postsModel.length,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: MyConstantsSC.primarycolor
+                                      .withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                height: 80,
+                                width: size.width,
+                                margin:
+                                    const EdgeInsets.only(bottom: 10, top: 10),
+                                padding:
+                                    const EdgeInsets.only(left: 10, top: 10),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
                                       children: [
-                                        Text(
-                                          value.postsModel[index].title
-                                              .toString(),
-                                          style: const TextStyle(
-                                            fontSize: 25,
-                                            fontFamily: 'Lalezar',
+                                        const SizedBox(width: 5),
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              Navigator.push(
+                                                context,
+                                                PageTransition(
+                                                    child: PostsPage(
+                                                        postId: value
+                                                            .postsModel[index]
+                                                            .id),
+                                                    type: PageTransitionType
+                                                        .fade),
+                                              );
+                                            });
+                                          },
+                                          child: Text(
+                                            'کلیک کنید ',
+                                            style: TextStyle(
+                                              fontFamily: 'Lalezar',
+                                              color: MyConstantsSC.primarycolor,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    Stack(
+                                      clipBehavior: Clip.none,
+                                      children: [
+                                        const SizedBox(
+                                          width: 60,
+                                          height: 60,
+                                        ),
+                                        Positioned(
+                                          bottom: 20,
+                                          right: 55,
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                value.postsModel[index].title
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                  fontSize: 25,
+                                                  fontFamily: 'Lalezar',
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
                 ),
               ],
             ),

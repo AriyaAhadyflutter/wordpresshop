@@ -22,9 +22,11 @@ class WoocommerceConstants {
   static String consumerSecret = 'cs_81cf01e428fbf3b942e951c116188ffe59453e2f';
   // base url
   static String baseUrl = 'https://ahadyariya1387.ir/wp-json/wc/v3/';
+  // base url posts
+  static String baseUrlPosts =
+      'https://ahadyariya1387.ir/wp-json/wp/v2/posts?_embed';
 
   // token url
-
   static String tokenURL =
       'https://ahadyariya1387.ir/wp-json/jwt-auth/v1/token';
 

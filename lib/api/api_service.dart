@@ -152,7 +152,7 @@ class ApiService {
   // نمایش پوست
 
   Future<List<PostsModel>> getposts() async {
-    String productURL = "https://ahadyariya1387.ir/wp-json/wp/v2/posts";
+    String productURL = WoocommerceConstants.baseUrlPosts;
     List<PostsModel> postsList = <PostsModel>[];
 
     try {
@@ -174,5 +174,4 @@ class ApiService {
     }
     return postsList;
   }
-  
 }

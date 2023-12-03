@@ -14,6 +14,7 @@ class ShopProvider extends ChangeNotifier {
   }
 
   bool isLoading = false;
+  bool isLoadingPost = false;
   // store all products
   // List<Products> _products = <Products>[];
   // List<Products> get product => _products;
@@ -50,26 +51,24 @@ class ShopProvider extends ChangeNotifier {
   //   notifyListeners();
   // }
 
-  Future<void>  getProductByCategory(String categoryId) async {
+  Future<void> getProductByCategory(String categoryId) async {
     isLoading = true;
     notifyListeners();
-    final List<Products> productByCategoryresponse = await _apiService!.getProductCategoryById(categoryId);
+    final List<Products> productByCategoryresponse =
+        await _apiService!.getProductCategoryById(categoryId);
     _productByCategory = productByCategoryresponse;
     isLoading = false;
     notifyListeners();
   }
 
   Future<void> getAllPosts() async {
-    isLoading = true;
+    isLoadingPost = true;
     notifyListeners();
     final List<PostsModel> response = await _apiService!.getposts();
     _postModel = response;
-    isLoading = false;
+    isLoadingPost = false;
     notifyListeners();
   }
-
-
-
 
   void initialaizeData() {
     _apiService = ApiService();
