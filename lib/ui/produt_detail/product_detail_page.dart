@@ -167,9 +167,9 @@ class _ProductDetailState extends State<ProductDetail> {
                     ),
                   ),
                   const SizedBox(height: 13),
-                  const SingleChildScrollView(
+               const   SingleChildScrollView(
                     child: Text(
-                      'و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای  ',
+                      'و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی ',
                       style: TextStyle(
                         fontSize: 17,
                         fontFamily: 'iranSans',
