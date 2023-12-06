@@ -10,8 +10,18 @@ extension ExtString on String {
     return passwordRegExp.hasMatch(this);
   }
 
+  String get removeAllHtmlTags {
+    RegExp exp = RegExp(
+      r"<[^>]*>|\n",
+      multiLine: true,
+      caseSensitive: true,
+    );
+    String text = this;
+    return text.replaceAll(exp, '');
+  }
 }
-  extension FarsiNubers on String {
+
+extension FarsiNubers on String {
   String get farsiNumbers {
     const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const farsi = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
