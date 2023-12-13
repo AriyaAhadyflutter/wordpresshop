@@ -29,9 +29,16 @@ class _CustomAppBarState extends State<CustomAppBar> {
               borderRadius: BorderRadius.circular(50),
               color: MyConstantsSC.primarycolor.withOpacity(0.15),
             ),
-            child: Icon(
-              Icons.close,
-              color: MyConstantsSC.primarycolor,
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  Navigator.pop(context);
+                });
+              },
+              child: Icon(
+                Icons.close,
+                color: MyConstantsSC.primarycolor,
+              ),
             ),
           ),
           Text(

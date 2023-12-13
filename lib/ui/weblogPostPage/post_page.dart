@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:wordpreesapp/contants/constants.dart';
 import 'package:wordpreesapp/model/wordpress/postmodel.dart';
 import 'package:wordpreesapp/provider/shop_provider.dart';
+import 'package:readmore/readmore.dart';
 
 class PostsPage extends StatefulWidget {
   final PostsModel? postsModel;
@@ -74,14 +75,28 @@ class _PostsPageState extends State<PostsPage> {
         body: SingleChildScrollView(
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-              child: Text(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
+              child: ReadMoreText(
                 widget.postsModel!.content.toString(),
+                textAlign: TextAlign.justify,
+                trimCollapsedText: 'بیشتر',
+                trimExpandedText: 'کمتر',
+                lessStyle: const TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'lalezar',
+                ),
+                moreStyle: const TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'lalezar',
+                ),
                 style: TextStyle(
                   fontFamily: 'iranSans',
                   fontSize: 19,
                   fontWeight: FontWeight.w700,
                   color: MyConstantsSC.blackcolor.withOpacity(0.7),
+                  overflow: TextOverflow.fade,
                 ),
               ),
             ),
