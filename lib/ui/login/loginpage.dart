@@ -20,12 +20,13 @@ class _LoginState extends State<Login> {
   late ApiService apiService;
   late CustomerModel customerModel;
   bool apiCalled = false;
+  bool hidePassword = true;
 
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   TextEditingController email =
-      TextEditingController(text: 'ariaahady814@gmail.com');
+      TextEditingController(text: 'Ariya96@gmail.com');
   TextEditingController password =
-      TextEditingController(text: 'ariaahady814@gmail.com');
+      TextEditingController(text: 'Ariya96@gmail.com');
 
   @override
   void initState() {
@@ -111,6 +112,7 @@ class _LoginState extends State<Login> {
                         Directionality(
                           textDirection: TextDirection.rtl,
                           child: TextFormField(
+                            obscureText: hidePassword,
                             controller: password,
                             keyboardType: TextInputType.emailAddress,
                             cursorColor: MyConstantsSC.primarycolor,
@@ -121,6 +123,22 @@ class _LoginState extends State<Login> {
                             ),
                             textDirection: TextDirection.ltr,
                             decoration: InputDecoration(
+                                prefix: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      if (hidePassword == true) {
+                                        hidePassword = false;
+                                      } else {
+                                        hidePassword = true;
+                                      }
+                                    });
+                                  },
+                                  child: Icon(
+                                    hidePassword
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                  ),
+                                ),
                                 errorStyle: const TextStyle(
                                   fontSize: 17,
                                   fontFamily: 'Yekanplus',

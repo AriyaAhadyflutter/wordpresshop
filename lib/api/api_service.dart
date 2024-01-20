@@ -149,7 +149,7 @@ class ApiService {
     return productcategoryList;
   }
 
-  // نمایش پوست
+  // نمایش پست
 
   Future<List<PostsModel>> getposts() async {
     String productURL = WoocommerceConstants.baseUrlPosts;

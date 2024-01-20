@@ -27,10 +27,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   List<Categories> productsCategoyNames = <Categories>[
-    Categories(orderId: 1, id: 17, name: '|گرانولا|'),
+    Categories(orderId: 1, id: 16, name: '|گرانولا|'),
     Categories(orderId: 2, id: 19, name: '|موسلی|'),
-    Categories(orderId: 3, id: 20, name: '|کوکی|'),
-    Categories(orderId: 4, id: 22, name: '|کوکی رژیمی|'),
+    Categories(orderId: 3, id: 21, name: '|کوکی|'),
+    Categories(orderId: 4, id: 20, name: '|کوکی رژیمی|'),
   ];
 
   @override
@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
           Provider.of<ShopProvider>(context, listen: false);
       // productList.getAllProducts();
       productList.getAllCategoryNames();
-      productList.getProductByCategory('17');
+      productList.getProductByCategory('16');
       productList.getAllPosts();
     });
     productsCategoyNames.sort(

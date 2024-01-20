@@ -18,8 +18,8 @@ class MyConstantsSC {
 }
 
 class WoocommerceConstants {
-  static String consumerKey = 'ck_9623c22b9933981f10b3efffa6f6338bf9a162b4';
-  static String consumerSecret = 'cs_81cf01e428fbf3b942e951c116188ffe59453e2f';
+  static String consumerKey = 'ck_7c5551c46861f2ff868544410bc3af022a6a3793';
+  static String consumerSecret = 'cs_185e526bee23cd43e94f76d9612bcf6dd23f9e89';
   // base url
   static String baseUrl = 'https://ahadyariya1387.ir/wp-json/wc/v3/';
   // base url posts
