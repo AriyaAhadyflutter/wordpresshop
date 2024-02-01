@@ -348,8 +348,9 @@ class _HomePageState extends State<HomePage> {
                                                 context,
                                                 PageTransition(
                                                     child: PostsPage(
-                                                      postsModel: value.postsModel[index],
-                                                        ),
+                                                      postsModel: value
+                                                          .postsModel[index],
+                                                    ),
                                                     type: PageTransitionType
                                                         .fade),
                                               );
