@@ -34,4 +34,5 @@ class WoocommerceConstants {
   static String customerUrl = 'customers';
   static String productUrl = 'products';
   static String productCategorytUrl = 'products/categories';
+  static String addToCart = 'addtocart'; 
 }

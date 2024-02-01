@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:wordpreesapp/contants/constants.dart';
+import 'package:wordpreesapp/model/woocammers/addto_cart_response.dart';
+import 'package:wordpreesapp/model/woocammers/addtocart_requast.dart';
 import 'package:wordpreesapp/model/woocammers/loginmodel.dart';
 import 'package:wordpreesapp/model/wordpress/postmodel.dart';
 import 'package:wordpreesapp/model/woocammers/product_category_model.dart';
@@ -173,5 +175,30 @@ class ApiService {
       throw 'Error $e';
     }
     return postsList;
+  }
+
+  Future<AddToCartResponse> addToCart(AddToCartRequastModel model) async {
+    model.userId = 1;
+    String url = WoocommerceConstants.baseUrl + WoocommerceConstants.addToCart;
+
+    late AddToCartResponse responseModel;
+
+    try {
+      Response response = await Dio().post(
+        url,
+        data: model.toJson(),
+        options: Options(headers: {
+          HttpHeaders.contentTypeHeader: 'application/Json',
+        }),
+      );
+      if (response.statusCode == 200) {
+        responseModel = AddToCartResponse.fromJson(response.data);
+      }
+    } on DioException catch (e) {
+      if (e.response!.statusCode == 404) {
+        throw 'Error $e';
+      }
+    }
+    return responseModel;
   }
 }
