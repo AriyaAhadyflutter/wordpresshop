@@ -94,14 +94,14 @@ class ShopProvider extends ChangeNotifier {
     }
     requastModel.products!.add(products);
 
-    await _apiService.addToCart(requastModel).then((cartResponseModel) {
-      if (cartResponseModel) {
-        if (cartResponseModel.data != null) {
-          List<CartItem>? newCartResponseModel = cartResponseModel.data;
+    await _apiService!.addToCart(requastModel).then((cartResponseModell) {
+     
+        if (cartResponseModell.data != null) {
+          List<CardItem>? newCartResponseModel = cartResponseModell.data;
           _itemsinCart!.addAll(newCartResponseModel!);
         }
-      }
-      onCallBack(cartResponseModel);
+      
+      onCallBack(cartResponseModell);
       notifyListeners();
     });
   }
