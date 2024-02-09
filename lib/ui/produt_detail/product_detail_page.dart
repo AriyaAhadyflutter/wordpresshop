@@ -3,8 +3,10 @@ import 'package:intl/intl.dart' show NumberFormat;
 import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:wordpreesapp/contants/constants.dart';
+import 'package:wordpreesapp/model/woocammers/addtocart_requast.dart';
 import 'package:wordpreesapp/model/woocammers/productmodel.dart';
 import 'package:wordpreesapp/provider/loader_provider.dart';
+import 'package:wordpreesapp/provider/shop_provider.dart';
 import 'package:wordpreesapp/ui/utils/custom_add.dart';
 import 'package:wordpreesapp/ui/utils/custom_appbar.dart';
 import 'package:wordpreesapp/ui/utils/exstanions.dart';
@@ -23,6 +25,9 @@ class ProductDetail extends StatefulWidget {
 class _ProductDetailState extends State<ProductDetail> {
   NumberFormat numberFormat = NumberFormat.decimalPattern('fa');
   bool isVisible = true;
+
+  int quantity = 0;
+  CartProducts cartProducts = CartProducts();
 
   @override
   Widget build(BuildContext context) {
@@ -222,9 +227,37 @@ class _ProductDetailState extends State<ProductDetail> {
                           color: Colors.red.shade900),
                     ],
                   ),
-                  child: const Icon(
-                    Icons.shopping_cart,
-                    color: Colors.white,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      const Icon(
+                        Icons.shopping_cart,
+                        color: Colors.white,
+                      ),
+                      Positioned(
+                        child: Provider.of<ShopProvider>(context, listen: false)
+                                    .itemsinCart ==
+                                null
+                            ? const Text(
+                                '0',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontFamily: 'Lalezar',
+                                ),
+                              )
+                            : Text(
+                                Provider.of<ShopProvider>(context, listen: true)
+                                    .itemsinCart! 
+                                    .length
+                                    .toString()
+                                    .farsiNumbers,
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  fontFamily: 'Lalezar',
+                                ),
+                              ),
+                      ),
+                    ],
                   ),
                 ),
                 CustomQuantity(
@@ -232,7 +265,9 @@ class _ProductDetailState extends State<ProductDetail> {
                   maxNumber: 20,
                   iconSize: 8,
                   value: 0,
-                  onChange: (value) {},
+                  onChange: (value) {
+                    cartProducts.quantity = value;
+                  },
                 ),
                 const SizedBox(width: 20),
                 // افزودن به سبد خرید
@@ -253,14 +288,29 @@ class _ProductDetailState extends State<ProductDetail> {
                           ),
                         ],
                       ),
-                      child: const Center(
-                        child: Text(
-                          'افزودن به سبد خرید',
-                          style: TextStyle(
-                            fontFamily: 'Lalezar',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                      child: Center(
+                        child: InkResponse(
+                          onTap: () {
+                            Provider.of<LoaderProvider>(context, listen: false)
+                                .setLoadingStatus(true);
+                            ShopProvider cartProvider =
+                                Provider.of<ShopProvider>(context,
+                                    listen: false);
+                            cartProducts.productId = widget.products!.id;
+                            cartProvider.addToCart(cartProducts, (valu) {
+                              Provider.of<LoaderProvider>(context,
+                                      listen: false)
+                                  .setLoadingStatus(false);
+                            });
+                          },
+                          child: const Text(
+                            'افزودن به سبد خرید',
+                            style: TextStyle(
+                              fontFamily: 'Lalezar',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
