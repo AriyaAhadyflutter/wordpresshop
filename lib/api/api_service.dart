@@ -201,4 +201,57 @@ class ApiService {
     }
     return responseModel;
   }
+
+  Future<List<Products>> getCatalog({
+    int? pageNumber,
+    int? pageSize,
+    String? searchKeyword,
+    String? tagName,
+    String? sortBy,
+    String? sortOrder = 'desc',
+  }) async {
+    List<Products> productList = <Products>[];
+
+    try {
+      String parametar = '';
+      if (searchKeyword != null) {
+        parametar += '&search=$searchKeyword';
+      }
+      if (pageSize != null) {
+        parametar += '&per_page=$pageSize';
+      }
+      if (pageNumber != null) {
+        parametar += '&page=$pageNumber';
+      }
+      if (tagName != null) {
+        parametar += '&tag=$tagName';
+      }
+      if (sortBy != null) {
+        parametar += '&orderby=$sortBy';
+      }
+      if (sortOrder != 'desc') {
+        parametar += '&order=asc';
+      } else {
+        parametar += '&order=desc';
+      }
+      final String productURL =
+          '${WoocommerceConstants.baseUrl}${WoocommerceConstants.productUrl}?consumer_key=${WoocommerceConstants.consumerKey}&consumer_secret=${WoocommerceConstants.consumerSecret}${parametar.toString()}';
+
+      Response response = await Dio().get(
+        productURL,
+        options: Options(
+          headers: {
+            HttpHeaders.connectionHeader: 'application/json',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        productList =
+            (response.data as List).map((e) => Products.fromJson(e)).toList();
+      }
+    } on DioException catch (e) {
+      throw 'Error $e';
+    }
+    return productList;
+  }
 }
